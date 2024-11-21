@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 80px;
+            background-color: rgb(139, 130, 130);
+        }
+        .top h1 {
+            letter-spacing: 10px;
+            text-decoration: underline;
+            text-shadow: 2px 1px white;
+        }
+        .choices {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .choice {
+            height: 300px;
+            width: 200px;
+            margin: 30px 40px;
+        }
+        .choice img {
+            height: 300px;
+            width: 200px;
+            object-fit: contain;
+            border-radius: 100%;
+            transition: all 0.4s ease-in;
+        }
+        .choice img:hover {
+            transform: scale(1.3);
+        }
+        .score-board {
+            display: flex;
+            justify-content: center;
+        }
+        .score {
+            margin-left: 50px;
+            margin-top: 10px;
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: x-large;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .msg-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;   
+            background-color: black;
+            color: white;
+            padding: 10px;
+        }
+        .msg-container p {
+            font-size: xx-large;
+            font-weight: 800;
+            text-align: center;
+        }
+        #user-score, #computer-score {
+            font-size: xx-large;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">
+        <h1>Rock Paper Scissors</h1>
+    </div>
+    <div class="choices">
+        <div class="choice" id="rock">
+            <img src="rock.png" alt="Rock">
+        </div>
+        <div class="choice" id="paper">
+            <img src="paper.png" alt="Paper">
+        </div>
+        <div class="choice" id="scissor">
+            <img src="scissor.jpg" alt="Scissor">
+        </div>
+    </div>
+    <div class="score-board">
+        <div class="score">
+            <p id="user-score">0</p>
+            <p>You</p>
+        </div>
+        <div class="score">
+            <p id="computer-score">0</p>
+            <p>Comp</p>
+        </div>
+    </div>
+    <div class="msg-container">
+        <p id="msg">Play your move</p>
+    </div>
+    <script>
+        let userscore = 0;
+        let compscore = 0;
+
+        const draw = () => {
+            console.log("Game draw");
+        };
+
+        const showwinner = (userwin) => {
+            if (userwin) {
+                console.log("You win");
+            } else {
+                console.log("You lose");
+            }
+        };
+
+        const comchoice = () => {
+            const options = ["rock", "paper", "scissor"];
+            const num = Math.floor(Math.random() * 3);
+            return options[num];
+        };
+
+        const playgame = (user) => {
+            console.log(`User choice is ${user}`);
+            const computerchoice = comchoice();
+            console.log(`Computer choice is ${computerchoice}`);
+            
+            if (user === computerchoice) {
+                draw();
+            } else {
+                let userwin = true;
+                if (user === "rock") {
+                    userwin = computerchoice === "paper" ? false : true;
+                } else if (user === "paper") {
+                    userwin = computerchoice === "scissor" ? false : true;
+                } else if (user === "scissor") {
+                    userwin = computerchoice === "rock" ? false : true;
+                }
+                showwinner(userwin);
+            }
+        };
+
+        const choices = document.querySelectorAll(".choice");
+        choices.forEach((choice) => {
+            choice.addEventListener("click", () => {
+                const user = choice.getAttribute("id");
+                console.log(user);
+                playgame(user);
+            });
+        });
+    </script>
+</body>
+</html>
